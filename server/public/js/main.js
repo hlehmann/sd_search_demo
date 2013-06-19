@@ -78,7 +78,9 @@ require.config({
     template                  : '../template',
     json2                     : 'lib/json2',
     console                   : 'lib/resthub/console'
-  }
+  },
+  // init internationalization
+  locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function

@@ -11,6 +11,8 @@ node_modules/
 node_modules/*
 .idea/
 .idea/*
+work/
+work/*
 
 pids
 logs

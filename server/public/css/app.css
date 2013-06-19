@@ -1,0 +1,27 @@
+body {
+    background-color : #DDDDDD;
+}
+.container {
+    background-color : #ffffff;
+    border           : solid 1px #808080;
+    border-radius    : 5px;
+    padding          : 20px;
+    margin-top       : 20px;
+    margin-bottom    : 20px;
+    box-shadow       : 1px 1px 3px grey;
+}
+.locales {
+    float  : right;
+    margin : 5px 10px;
+}
+.bloc-streams-list .row-fluid {
+    margin-top : 10px;
+}
+.bloc-streams-list {
+    margin-bottom : 15px;
+}
+.bloc-search-list .row-fluid {
+    margin-top : 10px;
+    text-align : left;
+}
+

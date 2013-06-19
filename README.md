@@ -3,11 +3,11 @@ sd_search_demo
 
 Demo using search api of Smartdata.io
 
-SETUP
+Setup
 -----
 npm install
 chmod a+x ./server/bin/search_demo
 
-START
+Start
 -----
 ./server/bin/search_demo

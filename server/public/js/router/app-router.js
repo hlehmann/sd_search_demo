@@ -1,24 +1,32 @@
-define(['backbone', 'backbone-queryparams'], function(Backbone) {
+define(['backbone', 'backbone-queryparams'], function(Backbone, queryparams, TestView) {
 
   var AppRouter = Backbone.Router.extend({
 
     initialize: function() {
-      Backbone.history.start({ pushState: true, root: "/" });
+      Backbone.history.start({ pushState: false });
     },
 
     routes: {
-      ''    : 'main',
-      'test': 'test'
+      'fr': 'fr',
+      'en': 'en'
     },
-
-    main: function() {
-      console.debug("Main route activated");
+    fr: function( ){
+      var locale = localStorage.getItem('locale');
+      if(locale != 'fr-fr') {
+        localStorage.setItem('locale', 'fr-fr');
+        // i18n plugin require page reload !
+        location.reload();
+      }
     },
-
-    test: function() {
-      console.debug("Test route activated");
-      alert("test");
+    en: function( ){
+      var locale = localStorage.getItem('locale');
+      if(locale != 'en-us') {
+        localStorage.setItem('locale', 'en-us');
+        // i18n plugin require page reload !
+        location.reload();
+      }
     }
+
   });
 
   return AppRouter;
