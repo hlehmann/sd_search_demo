@@ -1,6 +1,6 @@
 <div class="container">
     <div class="locales">
-        <a href="#fr">fr</a> - <a href="#en">en</a>
+        <a href="/fr">FR</a> - <a href="/en">EN</a>
     </div>
     <div class="hero-unit">
         <h1>{{labels.title}}</h1>
@@ -11,7 +11,7 @@
     <div class="bloc-streams-list"></div>
     <div class="row-fluid">
         {{#with labels.form}}
-        <form class="offset1 span10 bloc-search form-inline well">
+        <div class="offset1 span10 bloc-search form-inline well">
             <div class="input-append">
                 <input type="text" class="span11" placeholder="{{searchPlaceHolder}}" value="*"/>
                 <button class="btn" data-mode="meta">{{searchMeta}}</button>
@@ -20,7 +20,7 @@
                 <button class="btn btn-inverse" data-close>X</button>
             </div>
             <div class="bloc-search-list"></div>
-        </form>
+        </div>
         {{/with}}
     </div>
     <h2>{{labels.step2}}</h2>

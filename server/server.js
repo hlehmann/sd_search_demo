@@ -5,6 +5,7 @@ var server;
 var env = (process.env.NODE_ENV || 'dev').trim();
 require('js-yaml');
 var conf = require(path.join(__dirname, 'conf', env + '.yml'));
+var fs = require('fs');
 
 module.exports = {
 
@@ -12,8 +13,15 @@ module.exports = {
     var app = express();
 
     // static files of the poll answering front-end (not authenticated users can access)
-    app.use('/', express.static(path.join(__dirname, 'public')));
-
+    app.use('/', express.static(path.join(__dirname,'..', 'public')));
+    // If there is no matching file load index.html
+    app.use(function (req, res) {
+      //TODO: use path.join ?
+      //TODO: use render ?
+      fs.readFile(__dirname + '/../public/index.html', 'utf8', function(err, text){
+        res.send(text);
+      });
+    });
     // register router AT LAST !
     app.use(app.router);
     // Global error handler
@@ -49,7 +57,9 @@ module.exports = {
         }
       }
     }
+    //init app
     var app = module.exports.setup();
+    //Start server
     server = require('http').createServer(app);
     server.listen(port ? port : conf.port, host ? host : conf.host, function() {
       console.log('Starting server in on ' + server.address().address + ':' + server.address().port);
