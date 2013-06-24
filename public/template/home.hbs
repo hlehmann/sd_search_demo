@@ -1,6 +1,6 @@
 <div class="container">
     <div class="locales">
-        <a href="/fr">FR</a> - <a href="/en">EN</a>
+        <a href="/home/fr">FR</a> - <a href="/home/en">EN</a>
     </div>
     <div class="hero-unit">
         <h1>{{labels.title}}</h1>
@@ -8,6 +8,7 @@
     </div>
 
     <h2>{{labels.step1}}</h2>
+
     <div class="bloc-streams-list"></div>
     <div class="row-fluid">
         {{#with labels.form}}
@@ -24,6 +25,16 @@
         {{/with}}
     </div>
     <h2>{{labels.step2}}</h2>
-    <div class="bloc_Options"></div>
-    <div class="bloc_results"></div>
+
+    <div>
+        <div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="">{{labels.options.join}}</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active bloc-join">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

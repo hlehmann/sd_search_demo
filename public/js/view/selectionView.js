@@ -1,7 +1,7 @@
-define(['underscore', 'resthub', 'i18n!nls/labels', 'hbs!template/search'],
-  function(_, Resthub, labels, searchTemplate) {
+define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/selection'],
+  function(_, Resthub, conf, labels, selectionTemplate) {
     return Resthub.View.extend({
-      template  : searchTemplate,
+      template  : selectionTemplate,
       labels    : labels,
       initialize: function() {
         //refresh view

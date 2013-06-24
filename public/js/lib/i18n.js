@@ -25,14 +25,14 @@
  * for the nls/colors bundle to be that mixed in locale.
  *
  * 2) A regular module specifies a specific locale to load. For instance,
- * i18n!nls/fr-fr/colors. In this case, the plugin needs to load the master bundle
- * first, at nls/colors, then figure out what the best match locale is for fr-fr,
+ * i18n!nls/fr/colors. In this case, the plugin needs to load the master bundle
+ * first, at nls/colors, then figure out what the best match locale is for fr,
  * since maybe only fr or just root is defined for that locale. Once that best
  * fit is found, all of its locale pieces need to have their bundles loaded.
  *
  * Once all the bundles for the locale pieces load, then it mixes in all those
  * locale pieces into each other, then finally sets the context.defined value
- * for the nls/fr-fr/colors bundle to be that mixed in locale.
+ * for the nls/fr/colors bundle to be that mixed in locale.
  */
 (function () {
     'use strict';

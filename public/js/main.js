@@ -1,7 +1,7 @@
 // Set the require.js configuration for your application.
 require.config({
 
-  shim : {
+  shim  : {
     'underscore'         : {
       exports: '_'
     },
@@ -52,7 +52,7 @@ require.config({
   },
 
   // Libraries
-  paths: {
+  paths : {
     jquery                    : 'lib/jquery',
     underscore                : 'lib/underscore',
     'underscore-string'       : 'lib/underscore-string',
@@ -80,7 +80,7 @@ require.config({
     console                   : 'lib/resthub/console'
   },
   // init internationalization
-  locale: localStorage.getItem('locale') || 'en-us'
+  locale: localStorage.getItem('locale') || 'en'
 });
 
 // Load our app module and pass it to our definition function

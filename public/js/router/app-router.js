@@ -1,5 +1,5 @@
-define(['backbone', 'backbone-queryparams', 'view/appView'], function(Backbone, queryparams, AppView) {
-
+define(['backbone', 'backbone-queryparams', 'view/homeView'], function(Backbone, queryparams, HomeView) {
+  var locale = localStorage.getItem('locale');
   var AppRouter = Backbone.Router.extend({
 
     initialize: function() {
@@ -9,41 +9,18 @@ define(['backbone', 'backbone-queryparams', 'view/appView'], function(Backbone, 
     },
 
     routes     : {
-      '':'main',
-      'fr'    : 'fr',
-      'en'    : 'en',
+      'home/:lang':'home',
       '*other': '_onNotFound'
     },
 
     //main page
-    main : function() {
-      new AppView({root: '#main'});
-    },
-    //Change language to fr and go back to the main page
-    fr         : function() {
-      var locale = localStorage.getItem('locale');
-      if(locale != 'fr-fr') {
-        localStorage.setItem('locale', 'fr-fr');
-        // i18n plugin require page reload !
+    home : function(lang) {
+      if(lang != locale) {
+        localStorage.setItem('locale', lang);
         location.reload();
       }
       else
-        this.navigate('', {trigger: true});
-    },
-    //Change language to en and go back to the main page
-    en         : function() {
-      var locale = localStorage.getItem('locale');
-      if(locale != 'en-us') {
-        localStorage.setItem('locale', 'en-us');
-        // i18n plugin require page reload !
-        location.reload();
-      }
-      else
-        this.navigate('', {trigger: true});
-    },
-    //If page not found go back to the main page
-    _onNotFound: function() {
-      this.navigate('', {trigger: true});
+        new HomeView({root: '#main'});
     }
   });
 

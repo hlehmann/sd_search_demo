@@ -1,21 +1,19 @@
-define(['underscore', 'jquery', 'resthub', 'conf', 'collection/streams', 'view/searchView', 'view/streamsView',
-  'i18n!nls/labels',
-  'hbs!template/app'],
-  function(_, $, Resthub, conf, Streams, SearchView, StreamsView, labels, appTemplate) {
+define(['jquery', 'resthub', 'conf', 'collection/search', 'collection/selection', 'view/searchView',
+  'view/selectionView', 'view/joinView', 'i18n!nls/labels', 'hbs!template/home'],
+  function($, Resthub, conf, Search, Selection, SearchView, SelectionView, JoinView, labels, homeTemplate) {
 
     return Resthub.View.extend({
       /* Default values */
-      template        : appTemplate,
+      template        : homeTemplate,
       labels          : labels,
       search          : {
         form      : null,
         input     : null,
         mode      : '',
-        collection: new Streams(),
-        last      : ''
+        collection: new Search()
       },
-      streams         : {
-        collection: new Streams()
+      selection       : {
+        collection: new Selection()
       },
       /** Initialisation */
       initialize      : function() {
@@ -23,14 +21,12 @@ define(['underscore', 'jquery', 'resthub', 'conf', 'collection/streams', 'view/s
         this.render();
         //subviews render
         new SearchView({root: '.bloc-search-list', collection: this.search.collection}).render();
-        new StreamsView({root: '.bloc-streams-list', collection: this.streams.collection}).render();
+        new SelectionView({root: '.bloc-streams-list', collection: this.selection.collection}).render();
+        new JoinView({root: '.bloc-join', collection: this.selection.collection}).render();
         //Init search form
         this.search.form = this.$('.bloc-search');
         this.search.input = this.search.form.find('input');
-        //Events
-        this.on('search:changeMode', this.searchChangeMode);
-        //init search mode
-        this.trigger('search:changeMode', 'meta');
+        this.searchChangeMode('meta');
       },
       events          : {
         'keyup input'        : 'searchQuery',
@@ -50,7 +46,7 @@ define(['underscore', 'jquery', 'resthub', 'conf', 'collection/streams', 'view/s
       },
       /** When a button is clicked to change the mode */
       modeClick       : function(event) {
-        this.trigger('search:changeMode', $(event.target).data('mode'));
+        this.searchChangeMode($(event.target).data('mode'));
         this.search.input.focus();
         this.searchQuery();
       },
@@ -63,25 +59,8 @@ define(['underscore', 'jquery', 'resthub', 'conf', 'collection/streams', 'view/s
       searchQuery     : function() {
         //Retrieve input value
         var query = this.search.input.val();
-        if(query != '') {
-          //Init ajax parameters
-          var params = {
-            url : conf.searchUrl,
-            type: 'POST',
-            data: {size: 6}
-          };
-          //adding the request to the parameters
-          params.data[this.search.mode] = query;
-          //exec the request
-          $.ajax(params)
-            .done(_.bind(function(data) {
-              //Reset the collection with the new list
-              this.search.collection.reset(data.results);
-            }, this))
-            .fail(_.bind(function() {
-              //empty the collection
-              this.search.collection.reset();
-            }, this));
+        if(query !== '') {
+          this.search.collection.fetch(query, this.search.mode);
         }
         // If the input is empty
         else {
@@ -90,21 +69,24 @@ define(['underscore', 'jquery', 'resthub', 'conf', 'collection/streams', 'view/s
       },
       /** Add a stream to the selection list */
       addStream       : function(event) {
-        //Retrieve the id in button data
-        var id = $(event.target).data('add');
-        //Retrieve the stream in the search list
-        var stream = this.search.collection.get(id);
-        //Add to the selection list
-        this.streams.collection.add(stream);
+        if(this.selection.collection.length < 2) {
+          //Retrieve the id in button data
+          var id = $(event.target).data('add');
+          //Retrieve the stream in the search list
+          var stream = this.search.collection.get(id);
+          //Add to the selection list
+          this.selection.collection.add(stream);
+        }
+        else {
+          alert(labels.selection.max2);
+        }
       },
       /** Remove a stream from the selection list */
       removeStream    : function(event) {
         //Retrieve the id
         var id = $(event.target).data('remove');
         //Remove the stream
-        this.streams.collection.remove(id);
+        this.selection.collection.remove(id);
       }
-    })
-      ;
-  })
-;
+    });
+  });

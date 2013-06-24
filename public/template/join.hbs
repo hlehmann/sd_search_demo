@@ -1,0 +1,17 @@
+{{#if collection}}
+{{#each collection}}
+<div>
+    <label>
+        <span class="span4">{{name}} :</span>
+        <select data-join-stream="{{_id}}">
+            {{#each fields}}
+            <option value="{{this}}" {{ifequalsinline ../joinField this "selected"}}>{{this}}</option>
+            {{/each}}
+        </select>
+    </label>
+</div>
+{{/each}}
+<button class="btn btn-primary" data-joinExec="test">{{labels.options.exec}}</button>
+{{else}}
+{{labels.options.noStream}}
+{{/if}}
