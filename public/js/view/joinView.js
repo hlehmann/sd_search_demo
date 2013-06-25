@@ -9,8 +9,6 @@ define(
       context   : {},
       initialize: function() {
         //refresh view
-        this.context.join = {collection: this.collection};
-        _.bind(this.render, this);
         this.collection.on('all', this.render, this);
       },
       events    : {

@@ -49,39 +49,50 @@ define(['jquery', 'underscore', 'backbone', 'conf', 'moment'], function($, _, Ba
       //TODO: context
       this.set('createdDate', (moment(this.get('created')).format('LLL')));
     },
+    /** Fetch the the list of fields from SmartData and set Fields*/
     getFields  : function() {
+      var self = this;
       if(!this.get('fields')) {
         //Request the mapping
         $.ajax({url: conf.outApiURL + this.get('_id') + '/fields'})
-          .done(_.bind(function(data) {
-            this.set('fields', _.filter(data.fields, function(field) {
+          .done(function(data) {
+            self.set('fields', _.filter(data.fields, function(field) {
               return !field.match(/^__smartdata/);
             }));
-            this.set('fieldsString', this.get('fields').join(', '));
-            this.set('joinField', this.get('fields')[0]);
-          }, this));
+            self.set('joinField', self.get('fields')[0]);
+            //Todo: better way ?
+            self.set('fieldsString', self.get('fields').join(', '));
+          });
       }
     },
+    /** Request the number of contents and set total */
     getTotal   : function(cb) {
-      loadStream(this, {size: 1}, _.bind(function(err, data) {
+      var self = this;
+      loadStream(this, {size: 1}, function(err, data) {
         if(err) {
           return cb(err);
         }
         //Save the number of content
-        this.set('total', data.total);
+        self.set('total', data.total);
         cb();
-      }, this));
+      });
     },
+    /** Fetch all the content of a stream and set content
+     * You the call getTotal before
+     * @param cb
+     */
     getContent : function(cb) {
-      loadStream(this, {size: this.get('total')}, _.bind(function(err, data) {
+      var self = this;
+      loadStream(this, {size: this.get('total')}, function(err, data) {
         if(err) {
           return cb(err);
         }
         //Save content
-        this.set('content', data.content);
+        self.set('content', data.content);
         cb();
-      }, this));
+      });
     },
+    /** Fetch match content and send it back */
     findContent: function(query, cb) {
       loadStream(this, {query: query, size: this.get('total')}, cb)
     }

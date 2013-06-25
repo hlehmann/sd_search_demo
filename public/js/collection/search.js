@@ -1,9 +1,14 @@
-define(['jquery','underscore', 'backbone', 'conf', 'model/stream'], function($, _, Backbone, conf, Stream) {
+define(['jquery', 'underscore', 'backbone', 'conf', 'model/stream'], function($, _, Backbone, conf, Stream) {
   return Backbone.Collection.extend({
     //Reference to this collection's model
     model: Stream,
-    /** Request SmartData search api */
+    /**
+     * Request SmartData search api
+     * @param query {String} Content of the input
+     * @param mode {String} Selected mode
+     */
     fetch: function(query, mode) {
+      var self = this;
       //Init ajax parameters
       var params = {
         url : conf.outApiURL + 'search/',
@@ -14,14 +19,14 @@ define(['jquery','underscore', 'backbone', 'conf', 'model/stream'], function($, 
       params.data[mode] = query;
       //exec the request
       $.ajax(params)
-        .done(_.bind(function(data) {
+        .done(function(data) {
           //Reset the collection with the new list
-          this.reset(data.results);
-        }, this))
-        .fail(_.bind(function() {
+          self.reset(data.results);
+        })
+        .fail(function() {
           //empty the collection
-          this.reset();
-        }, this));
+          self.reset();
+        });
     }
   });
 });

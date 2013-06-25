@@ -48,6 +48,9 @@ require.config({
     },
     'async'              : {
       exports: 'async'
+    },
+    'moment_fr'          : {
+      deps: ['moment']
     }
   },
 
@@ -75,6 +78,7 @@ require.config({
     keymaster                 : 'lib/keymaster',
     hbs                       : 'lib/resthub/require-handlebars',
     moment                    : 'lib/moment',
+    moment_fr                 : 'lib/moment-lang/fr',
     template                  : '../template',
     json2                     : 'lib/json2',
     console                   : 'lib/resthub/console'
