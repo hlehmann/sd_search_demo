@@ -1,17 +1,20 @@
+<div class="alert bloc-join-message"></div>
 {{#if collection}}
-{{#each collection}}
-<div>
-    <label>
-        <span class="span4">{{name}} :</span>
-        <select data-join-stream="{{_id}}">
+<div class="row-fluid">
+    <div class="span8">
+        {{#each collection}}
+        <label for="join-field-{{_id}}" class="">{{name}} :</label>
+        <select data-join-stream="{{_id}}" id="join-field-{{_id}}">
             {{#each fields}}
-            <option value="{{this}}" {{ifequalsinline ../joinField this "selected"}}>{{this}}</option>
+            <option value="{{this}}"
+            {{ifequalsinline ../joinField this "selected"}}>{{this}}</option>
             {{/each}}
         </select>
-    </label>
+        {{/each}}
+    </div>
+    <div class="span4">
+        <button class="btn btn-primary" data-join-exec="test">{{labels.options.joinTest}}</button>
+        <button class="btn btn-primary" data-join-exec="all">{{labels.options.joinExec}}</button>
+    </div>
 </div>
-{{/each}}
-<button class="btn btn-primary" data-joinExec="test">{{labels.options.exec}}</button>
-{{else}}
-{{labels.options.noStream}}
 {{/if}}

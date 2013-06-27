@@ -2,18 +2,18 @@
 require.config({
 
   shim  : {
-    'underscore'         : {
+    'underscore'          : {
       exports: '_'
     },
-    'underscore-string'  : {
+    'underscore-string'   : {
       deps: [
         'underscore'
       ]
     },
-    'handlebars-orig'    : {
+    'handlebars-orig'     : {
       exports: 'Handlebars'
     },
-    'backbone'           : {
+    'backbone'            : {
       deps   : [
         'underscore',
         'underscore-string',
@@ -21,35 +21,40 @@ require.config({
       ],
       exports: 'Backbone'
     },
-    'backbone-datagrid'  : {
+    'backbone-queryparams': {
+      deps: [
+        'backbone'
+      ]
+    },
+    'backbone-datagrid'   : {
       deps   : [
         'backbone'
       ],
       exports: 'Backbone.Datagrid'
     },
-    'backbone-paginator' : {
+    'backbone-paginator'  : {
       deps   : [
         'backbone'
       ],
       exports: 'Backbone.Paginator'
     },
-    'bootstrap'          : {
+    'bootstrap'           : {
       deps: [
         'jquery'
       ]
     },
-    'backbone-relational': {
+    'backbone-relational' : {
       deps: [
         'backbone'
       ]
     },
-    'keymaster'          : {
+    'keymaster'           : {
       exports: 'key'
     },
-    'async'              : {
+    'async'               : {
       exports: 'async'
     },
-    'moment_fr'          : {
+    'moment_fr'           : {
       deps: ['moment']
     }
   },

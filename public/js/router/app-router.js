@@ -1,29 +1,36 @@
-define(['backbone', 'backbone-queryparams', 'view/homeView'], function(Backbone, queryparams, HomeView) {
-  var locale = localStorage.getItem('locale');
-  var AppRouter = Backbone.Router.extend({
+define(['backbone', 'backbone-queryparams', 'view/homeView', 'moment', 'moment_fr'],
+  function(Backbone, queryparams, HomeView, moment, momentFr) {
+    var locale = localStorage.getItem('locale');
+    var AppRouter = Backbone.Router.extend({
 
-    initialize: function() {
-      //TODO: pushState  ?
-      //TODO: links ? /fr ?
-      Backbone.history.start({ pushState: true });
-    },
+      initialize: function() {
+        //TODO: pushState  ?
+        //TODO: links ? /fr ?
+        Backbone.history.start({ pushState: true });
+      },
 
-    routes     : {
-      'home/:lang':'home',
-      '*other': '_onNotFound'
-    },
+      routes     : {
+        'home/:lang': 'home',
+        '*other'    : '_onNotFound'
+      },
 
-    //main page
-    home : function(lang) {
-      if(lang != locale) {
-        localStorage.setItem('locale', lang);
-        location.reload();
-      }
-      else
+      //main page
+      home       : function(lang) {
+        if(lang != locale) {
+          localStorage.setItem('locale', lang);
+          return location.reload();
+        }
+        if(['en','fr'].indexOf(locale) == -1) {
+          return this.navigate('home/en', {trigger: true});
+        }
+        moment.lang(locale);
         new HomeView({root: '#main'});
-    }
+      },
+      _onNotFound: function() {
+        this.navigate('home/' + locale, {trigger: true});
+      }
+    });
+
+    return AppRouter;
+
   });
-
-  return AppRouter;
-
-});

@@ -1,15 +1,15 @@
 {{#if collection}}
 {{#each collection}}
-<div class="row-fluid">
-    <button class="btn btn-large span1 active" data-remove="{{this._id}}">
-        <i class="icon-trash"></i>
-    </button>
-    <div class="span11">
-        <strong>{{name}}</strong>
-        - {{../labels.search.by}} {{user.firstname}} {{user.lastname}}
-        <i>- {{../labels.search.created}} {{createdDate}}</i> <br/>
-        {{desc}}<br/>
-        {{../labels.selection.fields}} {{fieldsString}}
+    <div class="alert alert-success">
+        <button class="btn close" data-remove="{{this._id}}">
+            <i class="icon-trash"></i>
+        </button>
+            <strong>{{name}}</strong>
+            - {{../labels.search.by}} {{user.firstname}} {{user.lastname}}
+            <i>- {{../labels.search.created}} {{createdString}}</i> <br/>
+            {{desc}}<br/>
+            {{../labels.selection.fields}} {{fieldsString}}
+        </div>
     </div>
 </div>
 {{/each}}

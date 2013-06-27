@@ -1,0 +1,22 @@
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#" data-tab=".bloc-result-table">{{labels.result.view}}</a></li>
+        <li><a href="#" data-tab=".bloc-result-save">{{labels.result.save}}</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane bloc-result-table active" id="tab1">
+        </div>
+        <div class="tab-pane bloc-result-save" id="tab2">
+            <h4>{{labels.result.downloadJSON}}</h4>
+            <button class="btn btn-result-download">{{labels.result.download}}</button>
+            <h4>{{labels.result.datasource}}</h4>
+
+            <div class="form-inline">
+                <input type="text" class="input-result-user" placeholder="{{labels.result.user}}"/>
+                <input type="password" class="input-result-password" placeholder="{{labels.result.password}}"/>
+                <button class="btn btn-result-save">{{labels.result.saveBtn}}</button>
+                <div class="bloc-result-save-message"></div>
+            </div>
+        </div>
+    </div>
+</div>

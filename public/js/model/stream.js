@@ -11,7 +11,6 @@ define(['jquery', 'underscore', 'backbone', 'conf', 'moment'], function($, _, Ba
     }
     //exec the request
     $.ajax({url: conf.outApiURL + stream.get('_id'), data: data})
-      //TODO: bind ?
       .done(function(data) {
         cb(null, data)
       })
@@ -23,31 +22,31 @@ define(['jquery', 'underscore', 'backbone', 'conf', 'moment'], function($, _, Ba
 
   return Backbone.Model.extend({
     default    : {
-      _id         : '',
-      name        : '',
-      user        : {
+      _id          : '',
+      name         : '',
+      user         : {
         id       : '',
         firstname: '',
         lastname : ''
       },
-      desc        : '',
-      meta        : null,
-      private     : false,
-      created     : 0,
-      updated     : 0,
-      createdDate : '',
-      sources     : [],
-      fields      : [],
-      fieldsString: '',
-      total       : 0,
-      content     : [],
-      joinField   : ''
+      desc         : '',
+      meta         : null,
+      private      : false,
+      created      : 0,
+      updated      : 0,
+      createdString: '',
+      sources      : [],
+      fields       : [],
+      fieldsString : '',
+      total        : 0,
+      content      : [],
+      joinField    : ''
     },
     // Define the id attribute
     idAttribute: '_id',
     initialize : function() {
-      //TODO: context
-      this.set('createdDate', (moment(this.get('created')).format('LLL')));
+      //String format
+      this.set('createdString', moment(this.get('created')).format('LLL'));
     },
     /** Fetch the the list of fields from SmartData and set Fields*/
     getFields  : function() {
@@ -56,11 +55,13 @@ define(['jquery', 'underscore', 'backbone', 'conf', 'moment'], function($, _, Ba
         //Request the mapping
         $.ajax({url: conf.outApiURL + this.get('_id') + '/fields'})
           .done(function(data) {
+            //set fields
             self.set('fields', _.filter(data.fields, function(field) {
               return !field.match(/^__smartdata/);
             }));
+            //set default join field
             self.set('joinField', self.get('fields')[0]);
-            //Todo: better way ?
+            //string format
             self.set('fieldsString', self.get('fields').join(', '));
           });
       }

@@ -14,14 +14,51 @@ body {
     float  : right;
     margin : 5px 10px;
 }
+
+/* Bloc-streams */
+
 .bloc-streams-list .row-fluid {
     margin-top : 10px;
 }
 .bloc-streams-list {
     margin-bottom : 15px;
 }
+.bloc-streams-list .alert {
+    margin-bottom : 5px;
+}
 .bloc-search-list .row-fluid {
     margin-top : 10px;
     text-align : left;
 }
-
+.bloc-search-list .btn {
+    float : left;
+}
+.bloc-join label {
+    width         : 350px;
+    display       : inline-block;
+    text-align    : right;
+    padding-right : 20px;
+    position      : relative;
+    top           : -4px;
+}
+.bloc-result {
+    overflow : auto;
+}
+.bloc-result-table td {
+    white-space : pre;
+}
+.bloc-result-table td div.tooltip {
+    white-space : normal;
+}
+h2 {
+    margin-top : 50px;
+}
+.bloc-bottom {
+    margin-top : 40px;
+}
+.bloc-result-save-message {
+    margin-top : 10px;
+}
+.bloc-join-message div {
+    margin : 0;
+}

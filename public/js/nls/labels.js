@@ -1,9 +1,10 @@
 define({
-  'root' : {
+  'root': {
     title    : 'Search API Demo',
     subtitle : 'This is an example of how to use the SmartData Out Api.',
-    step1    : 'I - Select DataStreams',
-    step2    : 'II - Select a process',
+    step1    : 'I - Select Two DataStreams',
+    step2    : 'II - Join DataStreams',
+    step3    : 'III - Save join',
     form     : {
       searchMeta       : 'By Description',
       searchField      : 'By Field',
@@ -15,15 +16,33 @@ define({
       created: 'Created:'
     },
     selection: {
-      fields: 'Fields:',
-      max2  : 'You can only select two DataStreams.'
+      fields: 'Fields:'
     },
     options  : {
-      join    : 'Join',
-      exec    : 'Proceed',
-      noStream: 'Please select two DataStreams.'
+      join         : 'Join',
+      joinExec     : 'Proceed',
+      joinTest     : 'Sample',
+      joinError    : 'An error has occurred : %s',
+      joinCompleted: 'Completed : %s generated content.',
+      noStream     : 'Please select two DataStreams.',
+      available    : 'Select the fields to compare.'
+    },
+    result   : {
+      view                    : 'View result',
+      noData                  : 'No Data generated',
+      save                    : 'Save',
+      downloadJSON            : 'Download in a JSON file',
+      download                : 'Download',
+      datasource              : 'Save into SmartData:',
+      user                    : 'User',
+      password                : 'Password',
+      saveBtn                 : 'Save new DataSource',
+      dataSourceCreationFailed: 'DataSource creation failed:',
+      sendDataFailed          : 'Send data failed:',
+      saving                  : 'Saving...',
+      saved                   : 'Successfully saved into SmartData :'
     }
   },
-  'fr': true
+  'fr'  : true
 })
 ;

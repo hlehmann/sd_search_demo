@@ -5,6 +5,7 @@ define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/selec
       labels    : labels,
       initialize: function() {
         //refresh view
+        this.render();
         this.collection.on('all', this.render, this);
       }
     });

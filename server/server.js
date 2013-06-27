@@ -19,6 +19,9 @@ module.exports = {
       //TODO: use path.join ?
       //TODO: use render ?
       fs.readFile(__dirname + '/../public/index.html', 'utf8', function(err, text){
+        if(err) {
+          console.log(err);
+        }
         res.send(text);
       });
     });
@@ -61,7 +64,10 @@ module.exports = {
     var app = module.exports.setup();
     //Start server
     server = require('http').createServer(app);
-    server.listen(port ? port : conf.port, host ? host : conf.host, function() {
+    server.listen(port ? port : conf.port, host ? host : conf.host, function(err) {
+      if(err) {
+        console.log(err);
+      }
       console.log('Starting server in on ' + server.address().address + ':' + server.address().port);
       if(readyCallback) {
         readyCallback();

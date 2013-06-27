@@ -1,6 +1,8 @@
-define(['jquery', 'resthub', 'conf', 'collection/search', 'collection/selection', 'view/searchView',
-  'view/selectionView', 'view/joinView', 'i18n!nls/labels', 'hbs!template/home'],
-  function($, Resthub, conf, Search, Selection, SearchView, SelectionView, JoinView, labels, homeTemplate) {
+define(['jquery', 'resthub',
+  'collection/search', 'collection/selection',
+  'view/searchView', 'view/selectionView', 'view/joinView',
+  'i18n!nls/labels', 'hbs!template/home'],
+  function($, Resthub, Search, Selection, SearchView, SelectionView, JoinView, labels, homeTemplate) {
 
     return Resthub.View.extend({
       /* Default values */
@@ -20,20 +22,21 @@ define(['jquery', 'resthub', 'conf', 'collection/search', 'collection/selection'
         //view render
         this.render();
         //subviews render
-        new SearchView({root: '.bloc-search-list', collection: this.search.collection}).render();
-        new SelectionView({root: '.bloc-streams-list', collection: this.selection.collection}).render();
-        new JoinView({root: '.bloc-join', collection: this.selection.collection}).render();
+        new SearchView({root: '.bloc-search-list', collection: this.search.collection});
+        new SelectionView({root: '.bloc-streams-list', collection: this.selection.collection});
+        new JoinView({root: '.bloc-join', collection: this.selection.collection});
         //Init search form
         this.search.form = this.$('.bloc-search');
         this.search.input = this.search.form.find('input');
+        //init search mode to 'meta'
         this.searchChangeMode('meta');
       },
       events          : {
-        'keyup input'        : 'searchQuery',
-        'click [data-mode]'  : 'modeClick',
-        'click [data-close]' : 'searchClean',
-        'click [data-add]'   : 'addStream',
-        'click [data-remove]': 'removeStream'
+        'keyup .input-search'      : 'searchQuery',
+        'click button[data-mode]'  : 'modeButtonClick',
+        'click button[data-close]' : 'searchClean',
+        'click button[data-add]'   : 'addStream',
+        'click button[data-remove]': 'removeStream'
       },
       /**
        * Change the mode of searching
@@ -45,8 +48,8 @@ define(['jquery', 'resthub', 'conf', 'collection/search', 'collection/selection'
         this.search.form.find('button[data-mode="' + mode + '"]').addClass('btn-info');
       },
       /** When a button is clicked to change the mode */
-      modeClick       : function(event) {
-        this.searchChangeMode($(event.target).data('mode'));
+      modeButtonClick : function(event) {
+        this.searchChangeMode($(event.currentTarget).data('mode'));
         this.search.input.focus();
         this.searchQuery();
       },
@@ -69,22 +72,17 @@ define(['jquery', 'resthub', 'conf', 'collection/search', 'collection/selection'
       },
       /** Add a stream to the selection list */
       addStream       : function(event) {
-        if(this.selection.collection.length < 2) {
-          //Retrieve the id in button data
-          var id = $(event.target).data('add');
-          //Retrieve the stream in the search list
-          var stream = this.search.collection.get(id);
-          //Add to the selection list
-          this.selection.collection.add(stream);
-        }
-        else {
-          alert(labels.selection.max2);
-        }
+        //Retrieve the id in button data
+        var id = $(event.currentTarget).data('add');
+        //Retrieve the stream in the search list
+        var stream = this.search.collection.get(id);
+        //Add to the selection list
+        this.selection.collection.add(stream);
       },
       /** Remove a stream from the selection list */
       removeStream    : function(event) {
         //Retrieve the id
-        var id = $(event.target).data('remove');
+        var id = $(event.currentTarget).data('remove');
         //Remove the stream
         this.selection.collection.remove(id);
       }

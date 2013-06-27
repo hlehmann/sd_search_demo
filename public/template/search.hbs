@@ -1,13 +1,13 @@
 {{#if collection}}
     {{#each collection}}
         <div class="row-fluid">
-            <button class="btn btn-large span1 btn-warning" data-add="{{this._id}}">
+            <button class="btn" data-add="{{this._id}}">
                 <i class="icon-plus"></i>
             </button>
             <div class="span11">
                 <strong>{{name}}</strong>
                 - {{../labels.search.by}} {{user.firstname}} {{user.lastname}}
-                <i>- {{../labels.search.created}} {{createdDate}}</i> <br/>
+                <i>- {{../labels.search.created}} {{createdString}}</i> <br/>
                 {{desc}}
             </div>
         </div>
