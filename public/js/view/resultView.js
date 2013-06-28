@@ -9,15 +9,26 @@ define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/resul
         this.fields = data.fields;
         this.render();
         //Create datagrid
-        var datagrid = new Backbone.Datagrid({ collection: this.collection.clone(), inMemory: true, paginated: true, perPage: 10, tableClassName: 'table table-striped table-bordered table-hover table-condensed', emptyMessage: 'No data match your filter', columns: this.fields.map(function(field) {
-          return { property: field, sortable: false, view: function(content) {
-            var val = content[field];
-            if(typeof val !== 'string' || val.length <= 40) {
-              return val
-            }
-            return $('<div></div>').tooltip({ placement: 'bottom', title: val }).text(val.substring(0, 37) + '...');
-          } };
-        })
+        var datagrid = new Backbone.Datagrid({
+          collection    : this.collection.clone(),
+          inMemory      : true,
+          paginated     : true,
+          perPage       : 10,
+          tableClassName: 'table table-striped table-bordered table-hover table-condensed',
+          emptyMessage  : 'No data match your filter',
+          columns       : this.fields.map(function(field) {
+            return {
+              property: field,
+              sortable: true,
+              view    : function(content) {
+                var val = content[field];
+                if(typeof val !== 'string' || val.length <= 40) {
+                  return val;
+                }
+                return $('<div/>').tooltip({placement: 'bottom', title: val }).text(val.substring(0, 37) + '...');
+              }
+            };
+          })
         });
         $('.bloc-result-table').html(datagrid.el);
       },
@@ -30,8 +41,10 @@ define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/resul
       changeTab : function(event) {
         var $tab = $(event.currentTarget).parent();
         var $div = $($(event.currentTarget).data('tab'));
+        //Toggle tab
         $tab.siblings().removeClass('active');
         $tab.addClass('active');
+        //Toggle content
         $div.siblings().removeClass('active');
         $div.addClass('active');
         return false;
@@ -54,10 +67,11 @@ define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/resul
             //Reactivate the button
             $button.removeClass('disabled');
             $button.html(labels.result.saveBtn);
-            //Display state
+            //Display error message
             if(err) {
               return $message.html($('<div/>').html(err.toString()).addClass('alert alert-error'));
             }
+            //Display success message
             $message.html($('<div/>').html(labels.result.saved + ' <a href="' + conf.studioSource +
               sourceId + '">' + sourceId + '</a>').addClass('alert alert-success'));
           })

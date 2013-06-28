@@ -6,6 +6,7 @@ define(['backbone', 'backbone-queryparams', 'view/homeView', 'moment', 'moment_f
       initialize: function() {
         //TODO: pushState  ?
         //TODO: links ? /fr ?
+        //TODO: revoke # ?
         Backbone.history.start({ pushState: true });
       },
 
@@ -16,6 +17,7 @@ define(['backbone', 'backbone-queryparams', 'view/homeView', 'moment', 'moment_f
 
       //main page
       home       : function(lang) {
+        console.log(this,arguments);
         if(lang != locale) {
           localStorage.setItem('locale', lang);
           return location.reload();

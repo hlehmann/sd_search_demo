@@ -47,6 +47,9 @@ body {
 .bloc-result-table td {
     white-space : pre;
 }
+.bloc-result-table th {
+    white-space : pre;
+}
 .bloc-result-table td div.tooltip {
     white-space : normal;
 }
