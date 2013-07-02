@@ -49,22 +49,27 @@ define(['jquery', 'underscore', 'backbone', 'conf', 'moment'], function($, _, Ba
       this.set('createdString', moment(this.get('created')).format('LLL'));
     },
     /** Fetch the the list of fields from SmartData and set Fields*/
-    getFields  : function() {
+    getFields  : function(cb) {
       var self = this;
-      if(!this.get('fields')) {
-        //Request the mapping
-        $.ajax({url: conf.outApiURL + this.get('_id') + '/fields'})
-          .done(function(data) {
-            //set fields
-            self.set('fields', _.filter(data.fields, function(field) {
-              return !field.match(/^__smartdata/);
-            }));
-            //set default join field
-            self.set('joinField', self.get('fields')[0]);
-            //string format
-            self.set('fieldsString', self.get('fields').join(', '));
-          });
+      if(this.get('fields')) {
+        return cb();
       }
+      //Request the mapping
+      $.ajax({url: conf.outApiURL + this.get('_id') + '/fields'})
+        .done(function(data) {
+          //set fields
+          self.set('fields', _.filter(data.fields, function(field) {
+            return !field.match(/^__smartdata/);
+          }));
+          //set default join field
+          self.set('joinField', self.get('fields')[0]);
+          //string format
+          self.set('fieldsString', self.get('fields').join(', '));
+          cb();
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          cb(errorThrown);
+        });
     },
     /** Request the number of contents and set total */
     getTotal   : function(cb) {

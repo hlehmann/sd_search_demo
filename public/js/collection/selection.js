@@ -5,8 +5,9 @@ define(['backbone', 'model/stream'], function(Backbone, Stream) {
     initialize: function() {
       this.on('add', this.onAdd);
     },
-    onAdd    : function(stream) {
-      stream.getFields();
+    onAdd     : function(stream) {
+      stream.getFields(function() {
+      });
     }
   });
 });

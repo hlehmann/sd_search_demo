@@ -1,9 +1,12 @@
-define(['async', 'underscore', 'collection/joinResult'], function(async, _, JoinResult) {
-  function exec(collection, isTest, progress, callback) {
+define(['async', 'underscore', 'collection/result', 'i18n!nls/labels'], function(async, _, Result, labels) {
+  function exec(collection, isSample, progress, callback) {
     //Init
+    if(collection.length != 2) {
+      return callback(new Error(labels.options.noStream))
+    }
     var stream1 = collection.models[0];
     var stream2 = collection.models[1];
-    var result = new JoinResult();
+    var result = new Result();
     //Retrieve streams size
     async.each([stream1, stream2], function(stream, cb) {
       stream.getTotal(cb);
@@ -24,7 +27,7 @@ define(['async', 'underscore', 'collection/joinResult'], function(async, _, Join
           return callback(err);
         }
         //If this is test join only the first contents
-        var list1 = isTest ? stream1.get('content').slice(0, 4) : stream1.get('content');
+        var list1 = isSample ? stream1.get('content').slice(0, 4) : stream1.get('content');
         //Init progress counter
         var counter = 0;
         function addProgress(){
@@ -39,7 +42,7 @@ define(['async', 'underscore', 'collection/joinResult'], function(async, _, Join
             return cb();
           }
           //TODO: pb of " ?
-          var query = stream2.get('joinField') + '="\\"' +
+          var query = '"'+stream2.get('joinField') + '"="\\"' +
             content1[stream1.get('joinField')].replace(/"/g,'?') + '\\""';
           stream2.findContent(query, function(err, data) {
             if(err) {
