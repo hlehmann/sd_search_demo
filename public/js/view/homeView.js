@@ -23,7 +23,7 @@ define(['jquery', 'resthub',
         this.render();
         //subviews render
         new SearchView({root: '.bloc-search-list', collection: this.search.collection});
-        new SelectionView({root: '.bloc-streams-list', collection: this.selection.collection});
+        new SelectionView({root: '.bloc-selection-list', collection: this.selection.collection});
         new JoinView({root: '.bloc-join', collection: this.selection.collection});
         //Init search form
         this.search.form = this.$('.bloc-search');
@@ -32,7 +32,7 @@ define(['jquery', 'resthub',
         this.searchChangeMode('meta');
       },
       events          : {
-        'keyup .input-search'      : 'searchQuery',
+        'keyup #input-search'      : 'searchQuery',
         'click button[data-mode]'  : 'modeButtonClick',
         'click button[data-close]' : 'searchClean',
         'click button[data-add]'   : 'addStream',

@@ -15,7 +15,7 @@ module.exports = {
     // static files of the poll answering front-end (not authenticated users can access)
     app.use('/', express.static(path.join(__dirname,'..', 'public')));
     // If there is no matching file load index.html
-    app.use(function (req, res) {
+    app.use('/home', function (req, res) {
       //TODO: use path.join ?
       //TODO: use render ?
       fs.readFile(__dirname + '/../public/index.html', 'utf8', function(err, text){
@@ -25,6 +25,7 @@ module.exports = {
         res.send(text);
       });
     });
+
     // register router AT LAST !
     app.use(app.router);
     // Global error handler
@@ -40,6 +41,10 @@ module.exports = {
         // Unknown route error handler
         res.send(404);
       }
+    });
+    // On root, redirect to client.
+    app.get('/', function(req, res) {
+      res.redirect('home/');
     });
 
     return app;

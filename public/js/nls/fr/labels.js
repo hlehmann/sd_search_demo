@@ -21,7 +21,6 @@ define({
     join         : 'Jointure',
     joinExec     : 'Exécuter',
     joinTest     : 'Echantillon',
-    joinError    : 'Une erreur est survenue : %s',
     joinCompleted: 'Terminé : %s contenus générés.',
     noStream     : 'Veuillez sélectionner deux DataStreams.',
     available    : 'Sélectionnez les champs à comparer.'

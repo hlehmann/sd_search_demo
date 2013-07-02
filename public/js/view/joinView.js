@@ -7,6 +7,8 @@ define(
     return Resthub.View.extend({
       template       : joinTemplate,
       labels         : labels,
+      resultView     : null,
+      controller     : join,
       initialize     : function() {
         //refresh view
         this.update();
@@ -22,9 +24,6 @@ define(
         this.$message = $('.bloc-join-message');
         if(this.collection.length != 2) {
           this.$message.html(labels.options.noStream);
-          if(this.collection.length > 2) {
-            this.$message.addClass('alert-error');
-          }
         }
         else {
           this.$message.html(labels.options.available).addClass('alert-info');
@@ -44,19 +43,14 @@ define(
       },
       /** Proceed join after a click on the exec button */
       joinExec       : function(event) {
-        if(this.collection.length != 2) {
-          return alert(labels.options.noStream)
-        }
         var self = this;
         var isTest = $(event.currentTarget).data('join-exec') === 'test';
-        join.exec(this.collection, isTest, progress, function(err, collection, fields) {
+        this.controller.exec(this.collection, isTest, progress, function(err, collection, fields) {
           if(err) {
-            self.message(_.sprintf(labels.options.joinError, err), 'error');
-            return console.log(err);
+            return self.message(err, 'error');
           }
-          //Tests
           self.message(_.sprintf(labels.options.joinCompleted, collection.length), 'success');
-          new resultView({collection: collection, fields: fields});
+          self.resultView = new resultView({collection: collection, fields: fields});
         });
 
         /** Display a progress bar */

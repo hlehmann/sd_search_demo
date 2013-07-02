@@ -54,7 +54,7 @@ define(['jquery', 'backbone', 'conf', 'i18n!nls/labels'], function($, Backbone, 
           cb();
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-          cb(new Error(labels.result.dataSourceCreationFailed+' '+errorThrown));
+          cb(new Error(labels.result.dataSourceCreationFailed + ' ' + errorThrown));
         })
     },
     /** Send collection data into the DataSource */
@@ -77,7 +77,7 @@ define(['jquery', 'backbone', 'conf', 'i18n!nls/labels'], function($, Backbone, 
           cb();
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-          cb(new Error(labels.result.sendDataFailed+' '+errorThrown));
+          cb(new Error(labels.result.sendDataFailed + ' ' + errorThrown));
         })
     }
   })

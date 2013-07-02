@@ -18,9 +18,9 @@ define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/resul
           emptyMessage  : 'No data match your filter',
           columns       : this.fields.map(function(field) {
             return {
-              property: field,
-              sortable: true,
-              view    : function(content) {
+              property  : field,
+              sortable  : true,
+              view      : function(content) {
                 var val = content[field];
                 if(typeof val !== 'string' || val.length <= 40) {
                   return val;
@@ -78,6 +78,7 @@ define(['underscore' , 'resthub', 'conf', 'i18n!nls/labels', 'hbs!template/resul
       },
       /** Donwload File */
       download  : function() {
+        console.log(this);
         location.href = "data:application/octet-stream;charset=utf-8;base64," + btoa(JSON.stringify(this.collection));
       }
     });

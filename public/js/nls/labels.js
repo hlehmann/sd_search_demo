@@ -22,7 +22,6 @@ define({
       join         : 'Join',
       joinExec     : 'Proceed',
       joinTest     : 'Sample',
-      joinError    : 'An error has occurred : %s',
       joinCompleted: 'Completed : %s generated content.',
       noStream     : 'Please select two DataStreams.',
       available    : 'Select the fields to compare.'

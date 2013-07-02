@@ -17,13 +17,13 @@ body {
 
 /* Bloc-streams */
 
-.bloc-streams-list .row-fluid {
+.bloc-selection-list .row-fluid {
     margin-top : 10px;
 }
-.bloc-streams-list {
+.bloc-selection-list {
     margin-bottom : 15px;
 }
-.bloc-streams-list .alert {
+.bloc-selection-list .alert {
     margin-bottom : 5px;
 }
 .bloc-search-list .row-fluid {
