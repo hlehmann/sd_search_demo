@@ -1,13 +1,12 @@
 define(['backbone', 'backbone-queryparams', 'view/homeView', 'moment', 'moment_fr'],
   function(Backbone, queryparams, HomeView, moment, momentFr) {
     var locale = localStorage.getItem('locale');
+
     var AppRouter = Backbone.Router.extend({
 
       initialize: function() {
-        //TODO: pushState  ?
-        //TODO: links ? /fr ?
-        //TODO: revoke # ?
-        Backbone.history.start({ pushState: true });
+        this.homeView = new HomeView();
+        Backbone.history.start({ pushState: false});
       },
 
       routes     : {
@@ -17,22 +16,20 @@ define(['backbone', 'backbone-queryparams', 'view/homeView', 'moment', 'moment_f
 
       //main page
       home       : function(lang) {
-        console.log(this,arguments);
         if(lang != locale) {
           localStorage.setItem('locale', lang);
           return location.reload();
         }
-        if(['en','fr'].indexOf(locale) == -1) {
-          return this.navigate('home/en', {trigger: true});
+        if(['en', 'fr'].indexOf(locale) == -1) {
+          return this.navigate('home/en', {trigger: true, replace: true});
         }
         moment.lang(locale);
-        new HomeView({root: '#main'});
+        this.homeView.$el.appendTo('#main');
       },
       _onNotFound: function() {
-        this.navigate('home/' + locale, {trigger: true});
+        this.navigate('home/' + locale, {trigger: true, replace: true});
       }
     });
 
-    return AppRouter;
-
+    new AppRouter();
   });

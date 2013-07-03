@@ -21,7 +21,7 @@ define(
       /** Update rendering*/
       update         : function() {
         this.render();
-        this.$message = $('.bloc-join-message');
+        this.$message = this.$('.bloc-join-message');
         if(this.collection.length != 2) {
           this.$message.html(labels.options.noStream);
         }
@@ -45,12 +45,12 @@ define(
       joinExec       : function(event) {
         var self = this;
         var isTest = $(event.currentTarget).data('join-exec') === 'test';
-        this.controller.exec(this.collection, isTest, progress, function(err, collection, fields) {
+        this.controller.exec(this.collection, isTest, progress, function(err, result) {
           if(err) {
             return self.message(err, 'error');
           }
-          self.message(_.sprintf(labels.options.joinCompleted, collection.length), 'success');
-          self.resultView = new resultView({collection: collection, fields: fields});
+          self.message(_.sprintf(labels.options.joinCompleted, result.collection.length), 'success');
+          self.resultView = new resultView(result);
         });
 
         /** Display a progress bar */

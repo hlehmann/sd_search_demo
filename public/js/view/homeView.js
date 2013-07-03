@@ -22,9 +22,9 @@ define(['jquery', 'resthub',
         //view render
         this.render();
         //subviews render
-        new SearchView({root: '.bloc-search-list', collection: this.search.collection});
-        new SelectionView({root: '.bloc-selection-list', collection: this.selection.collection});
-        new JoinView({root: '.bloc-join', collection: this.selection.collection});
+        new SearchView({root: this.$('.bloc-search-list'), collection: this.search.collection});
+        new SelectionView({root: this.$('.bloc-selection-list'), collection: this.selection.collection});
+        new JoinView({root: this.$('.bloc-join'), collection: this.selection.collection});
         //Init search form
         this.search.form = this.$('.bloc-search');
         this.search.input = this.search.form.find('input');

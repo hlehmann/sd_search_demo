@@ -23,6 +23,7 @@ define({
       joinExec     : 'Proceed',
       joinTest     : 'Sample',
       joinCompleted: 'Completed : %s generated content.',
+      joinBetween  : 'Join between %s and %s',
       noStream     : 'Please select two DataStreams.',
       available    : 'Select the fields to compare.'
     },
@@ -33,13 +34,16 @@ define({
       downloadJSON            : 'Download in a JSON file',
       download                : 'Download',
       datasource              : 'Save into SmartData:',
+      addStream               : 'Also add a new DataStream',
       user                    : 'User',
       password                : 'Password',
       saveBtn                 : 'Save new DataSource',
       dataSourceCreationFailed: 'DataSource creation failed:',
+      dataStreamCreationFailed: 'DataStream creation failed:',
       sendDataFailed          : 'Send data failed:',
       saving                  : 'Saving...',
-      saved                   : 'Successfully saved into SmartData :'
+      saved                   : 'DataSource successfully created :',
+      streamSaved             : 'DataStream successfully created : '
     }
   },
   'fr'  : true

@@ -99,8 +99,8 @@ define([
     it('should join two streams', function(done) {
       selection.reset([stream1, stream2]);
       join.exec(selection, false, function() {
-      }, function(err, collection, fields) {
-        expect(collection.length).to.equal(5);
+      }, function(err, result) {
+        expect(result.collection.length).to.equal(5);
         done();
       });
     });
@@ -108,8 +108,8 @@ define([
     it('should return the new mapping', function(done) {
       selection.reset([stream1, stream2]);
       join.exec(selection, false, function() {
-      }, function(err, collection, fields) {
-        expect(fields).to.eql(['key1', 'key2', 'key3', 'key4']);
+      }, function(err, result) {
+        expect(result.fields).to.eql(['key1', 'key2', 'key3', 'key4']);
         done();
       });
     });

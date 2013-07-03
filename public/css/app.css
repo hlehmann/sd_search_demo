@@ -49,6 +49,12 @@ body {
 }
 .bloc-result-table th {
     white-space : pre;
+    background-color: #D9EDF7;
+    color: #3A87AD;
+}
+.bloc-result-table th.stream2 {
+    background-color: #DFF0D8;
+    color: #468847;
 }
 .bloc-result-table td div.tooltip {
     white-space : normal;

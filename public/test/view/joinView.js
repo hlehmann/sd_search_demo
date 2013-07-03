@@ -29,7 +29,7 @@ define([
         }
         var result = new Backbone.Collection();
         result.add(content);
-        cb(null, result, fields);
+        cb(null, {collection:result, fields: fields, fields2:[]});
       }}
     });
 

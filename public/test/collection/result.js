@@ -2,10 +2,12 @@ define([
   'sinon',
   'collection/result'
 ], function(sinon, Result) {
-  describe('Join result collection tests', function() {
+  describe('Result collection tests', function() {
     var collection = null;
     var server = null;
-    var _id = '123456789012345678901234';
+    var sourceId = '12345678901234567890123A';
+    var streamId = '12345678901234567890123B';
+    var name = 'THENAME';
     var content = [
       {key1: 'val11', key2: 'val21'},
       {key1: 'val12', key2: 'val22'},
@@ -26,16 +28,17 @@ define([
     it('should create a DataSource', function(done) {
       server.respondWith('POST', /^.*\/source[^/]*$/, function(xhr) {
         expect(JSON.parse(xhr.requestBody)).to.eql(
-          {"name": "Join Demo", "format": {"type": "json"}, "integration": {"mode": "replace"}});
-        xhr.respond(200, {'Content-Type': 'application/json'}, JSON.stringify({_id: _id}));
+          {"name": "THENAME", "format": {"type": "json"}, "integration": {"mode": "replace"}});
+        xhr.respond(200, {'Content-Type': 'application/json'}, JSON.stringify({_id: sourceId}));
       });
 
       collection = new Result();
+      collection.name = name;
       collection.createDataSource(collection, function(err) {
         if(err) {
           return done(err);
         }
-        expect(collection.sourceId).to.equal(_id);
+        expect(collection.sourceId).to.equal(sourceId);
         done();
       });
     });
@@ -43,13 +46,13 @@ define([
     it('should send data into a DataSource', function(done) {
 
       server.respondWith('POST', /^.*\/source\/([a-zA-Z0-9]{24})\/data[^/]*$/, function(xhr, id) {
-        expect(id).to.equal(_id);
+        expect(id).to.equal(sourceId);
         expect(xhr.requestBody).to.be.an.instanceof(FormData);
         xhr.respond(200, {'Content-Type': 'application/json'}, '{}');
       });
 
       collection = new Result();
-      collection.sourceId = _id;
+      collection.sourceId = sourceId;
       collection.reset(content);
       expect(collection.length).to.equal(content.length);
       collection.sendData(collection, function(err) {
@@ -65,7 +68,7 @@ define([
       collection = new Result();
       collection.reset(content);
       collection.createDataSource = function(self, cb) {
-        self.sourceId = _id;
+        self.sourceId = sourceId;
         cb();
       };
       collection.sendData = function(self, cb) {
@@ -73,9 +76,32 @@ define([
         cb();
       };
 
-      collection.save('USER','PASSWORD', function() {
-        expect(collection.sourceId).to.equal(_id);
+      collection.save('USER', 'PASSWORD', function() {
+        expect(collection.sourceId).to.equal(sourceId);
         expect(send).to.be.true;
+        done();
+      });
+    });
+
+    it('should create a new DataStream', function(done) {
+      server.respondWith('POST', /^.*\/stream[^/]*$/, function(xhr) {
+        expect(JSON.parse(xhr.requestBody)).to.eql({
+          "name" : "THENAME",
+          sources: [
+            {_id: sourceId}
+          ]
+        });
+        xhr.respond(200, {'Content-Type': 'application/json'}, JSON.stringify({_id: streamId}));
+      });
+
+      collection = new Result();
+      collection.name = name;
+      collection.sourceId= sourceId;
+      collection.createDataStream(function(err) {
+        if(err) {
+          return done(err);
+        }
+        expect(collection.streamId).to.equal(streamId);
         done();
       });
     });
