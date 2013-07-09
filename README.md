@@ -6,7 +6,6 @@ Demo using search api of Smartdata.io
 Setup
 -----
 npm install
-chmod a+x ./server/bin/search_demo
 
 Start
 -----
