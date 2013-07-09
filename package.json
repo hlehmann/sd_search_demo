@@ -2,7 +2,7 @@
   "author"         : "Atos Worldine",
   "name"           : "sd_search_demo",
   "description"    : "SmartData search demo is a demonstration of operations using SmartData Out Api",
-  "version"        : "2.8.0",
+  "version"        : "1.0",
   "bin"            : {
     "searchdemo": "./server.js"
   },

@@ -28,7 +28,7 @@ define([
     it('should create a DataSource', function(done) {
       server.respondWith('POST', /^.*\/source[^/]*$/, function(xhr) {
         expect(JSON.parse(xhr.requestBody)).to.eql(
-          {"name": "THENAME", "format": {"type": "json"}, "integration": {"mode": "replace"}});
+          {"name": name, "format": {"type": "json"}, "integration": {"mode": "replace"}});
         xhr.respond(200, {'Content-Type': 'application/json'}, JSON.stringify({_id: sourceId}));
       });
 
@@ -58,10 +58,10 @@ define([
       collection.sendData(collection, function(err) {
         if(err) {
           return done(err);
-        }
-        done();
-      });
-    });
+  }
+  done();
+});
+});
 
     it('should save results into a DataSource', function(done) {
       var send = false;
@@ -86,7 +86,7 @@ define([
     it('should create a new DataStream', function(done) {
       server.respondWith('POST', /^.*\/stream[^/]*$/, function(xhr) {
         expect(JSON.parse(xhr.requestBody)).to.eql({
-          "name" : "THENAME",
+          "name" : name,
           sources: [
             {_id: sourceId}
           ]
@@ -96,7 +96,7 @@ define([
 
       collection = new Result();
       collection.name = name;
-      collection.sourceId= sourceId;
+      collection.sourceId = sourceId;
       collection.createDataStream(function(err) {
         if(err) {
           return done(err);
